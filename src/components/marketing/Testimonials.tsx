@@ -52,12 +52,14 @@ export function Testimonials() {
                 ))}
               </div>
               <p className="text-lg text-foreground mb-8 leading-relaxed italic">
-                "{t.content}"
+                &ldquo;{t.content}&rdquo;
               </p>
+
               <div className="flex items-center gap-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20">
-                  <img src={t.avatar} alt={t.name} className="object-cover" />
+                  <Image src={t.avatar} alt={t.name} fill className="object-cover" />
                 </div>
+
                 <div>
                   <div className="font-bold">{t.name}</div>
                   <div className="text-sm text-muted-foreground">{t.role}</div>

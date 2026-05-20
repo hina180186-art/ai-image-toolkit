@@ -1,15 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import { Upload, Download, X, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Download, X, Image as ImageIcon, Loader2 } from 'lucide-react';
+
 import imageCompression from 'browser-image-compression';
 import JSZip from 'jszip';
 import { Button } from '@/components/ui/button';
 
+interface ToolResult {
+  original: File;
+  compressed: Blob;
+  reduction: string;
+}
+
 export default function ToolsPage() {
   const [files, setFiles] = useState<File[]>([]);
   const [processing, setProcessing] = useState(false);
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<ToolResult[]>([]);
+
+
   const [quality, setQuality] = useState(0.8);
 
   const handleDrop = (e: React.DragEvent) => {
@@ -31,7 +40,7 @@ export default function ToolsPage() {
 
   const handleCompress = async () => {
     setProcessing(true);
-    const compressedResults = [];
+    const compressedResults: ToolResult[] = [];
     
     for (const file of files) {
       try {
@@ -50,7 +59,8 @@ export default function ToolsPage() {
 
   const downloadZip = async () => {
     const zip = new JSZip();
-    results.forEach(r => zip.file(`compressed_${r.original.name}`, r.compressed));
+    results.forEach((r: ToolResult) => zip.file(`compressed_${r.original.name}`, r.compressed));
+
     const content = await zip.generateAsync({ type: 'blob' });
     const url = URL.createObjectURL(content);
     const a = document.createElement('a');
@@ -73,10 +83,10 @@ export default function ToolsPage() {
         <div onDrop={handleDrop} onDragOver={e => e.preventDefault()} className="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center bg-white hover:border-blue-500 cursor-pointer mb-6">
           <input type="file" multiple accept="image/*" onChange={handleFileInput} className="hidden" id="file-input" />
           <label htmlFor="file-input" className="cursor-pointer block">
-            <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <p className="text-lg font-medium">Drop images here or click to upload</p>
           </label>
         </div>
+
 
         {files.length > 0 && (
           <div className="space-y-3 mb-6">
@@ -106,7 +116,8 @@ export default function ToolsPage() {
               <Button onClick={downloadZip}>Download All as ZIP</Button>
             </div>
             <div className="space-y-3">
-              {results.map((r, i) => (
+              {results.map((r: ToolResult, i: number) => (
+
                 <div key={i} className="bg-white p-4 rounded-lg border flex items-center justify-between">
                   <div>
                     <p className="font-medium">{r.original.name}</p>

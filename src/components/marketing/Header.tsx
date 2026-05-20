@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button';
 
 const navItems = [
   { name: 'Features', href: '#features' },
-  { name: 'How it works', href: '#how-it-works' },
+  { name: 'Optimize JPG', href: '/tools/compress-jpg' },
+  { name: 'Optimize PNG', href: '/tools/compress-png' },
   { name: 'Pricing', href: '#pricing' },
 ];
 
@@ -26,38 +27,38 @@ export function Header() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'py-3 bg-white/80 backdrop-blur-md border-b shadow-sm' 
-          : 'py-5 bg-transparent'
+          ? 'py-3 bg-white/70 backdrop-blur-xl border-b border-black/5 shadow-sm' 
+          : 'py-6 bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <Link href="/" className="font-bold text-2xl tracking-tighter flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg" />
+          <Link href="/" className="font-black text-2xl tracking-tighter flex items-center gap-2 group">
+            <div className="w-9 h-9 bg-primary rounded-xl group-hover:rotate-6 transition-transform duration-300 shadow-lg shadow-primary/20" />
             <span className="hidden sm:inline">AI Image Toolkit</span>
-            <span className="sm:hidden">AI Toolkit</span>
+            <span className="sm:hidden">Toolkit</span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
               <Link 
                 key={item.name} 
                 href={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
               >
                 {item.name}
               </Link>
             ))}
             <div className="h-4 w-px bg-border mx-2" />
-            <Link href="/login" className="text-sm font-medium hover:text-primary transition-colors">
-              Log in
+            <Link href="/login" className="text-xs font-black uppercase tracking-widest hover:text-primary transition-colors">
+              Platform
             </Link>
             <Link href="/tools">
-              <Button size="sm" className="rounded-xl px-5">
-                Compress Free <ArrowRight className="ml-2 w-4 h-4" />
+              <Button size="sm" className="rounded-xl px-6 h-10 font-black uppercase tracking-widest text-[10px]">
+                Start Free
               </Button>
             </Link>
           </nav>
@@ -72,6 +73,7 @@ export function Header() {
         </div>
       </div>
 
+
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
@@ -81,22 +83,22 @@ export function Header() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white border-b overflow-hidden"
           >
-            <div className="px-4 py-6 space-y-4">
+            <div className="px-4 py-8 space-y-6">
               {navItems.map((item) => (
                 <Link 
                   key={item.name} 
                   href={item.href}
-                  className="block text-lg font-medium py-2"
+                  className="block text-sm font-black uppercase tracking-widest text-muted-foreground"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
               <hr />
-              <Link href="/login" className="block text-lg font-medium py-2">Log in</Link>
+              <Link href="/login" className="block text-sm font-black uppercase tracking-widest text-primary">Platform</Link>
               <Link href="/tools" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button className="w-full h-12 rounded-xl text-lg">
-                  Compress Free
+                <Button className="w-full h-14 rounded-2xl text-xs font-black uppercase tracking-widest">
+                  Start Free
                 </Button>
               </Link>
             </div>
