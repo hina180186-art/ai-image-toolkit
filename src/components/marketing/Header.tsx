@@ -35,11 +35,16 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <Link href="/" className="font-black text-2xl tracking-tighter flex items-center gap-2 group">
-            <div className="w-9 h-9 bg-primary rounded-xl group-hover:rotate-6 transition-transform duration-300 shadow-lg shadow-primary/20" />
-            <span className="hidden sm:inline">AI Image Toolkit</span>
-            <span className="sm:hidden">Toolkit</span>
+          <Link href="/" className="font-black text-2xl tracking-tighter flex items-center gap-3 group">
+            <div className="w-10 h-10 bg-primary rounded-xl group-hover:rotate-6 transition-all duration-500 shadow-xl shadow-primary/20 flex items-center justify-center text-white">
+              <span className="text-lg">AI</span>
+            </div>
+            <div className="flex flex-col -gap-1">
+              <span className="text-slate-900 leading-none">Toolkit</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Pro Edition</span>
+            </div>
           </Link>
+
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-10">
@@ -47,21 +52,19 @@ export function Header() {
               <Link 
                 key={item.name} 
                 href={item.href}
-                className="text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+                className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-primary transition-all"
               >
                 {item.name}
               </Link>
             ))}
-            <div className="h-4 w-px bg-border mx-2" />
-            <Link href="/login" className="text-xs font-black uppercase tracking-widest hover:text-primary transition-colors">
-              Platform
-            </Link>
+            <div className="h-4 w-px bg-slate-100 mx-2" />
             <Link href="/tools">
-              <Button size="sm" className="rounded-xl px-6 h-10 font-black uppercase tracking-widest text-[10px]">
-                Start Free
+              <Button size="sm" className="rounded-xl px-8 h-11 font-black uppercase tracking-widest text-[10px] bg-slate-900 shadow-2xl shadow-slate-900/10">
+                Launch App
               </Button>
             </Link>
           </nav>
+
 
           {/* Mobile Menu Toggle */}
           <button 

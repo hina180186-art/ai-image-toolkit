@@ -28,16 +28,18 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
-            <Link href="/" className="font-bold text-2xl tracking-tighter flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary rounded-lg" />
-              AI Image Toolkit
+            <Link href="/" className="font-black text-2xl tracking-tighter flex items-center gap-3 group">
+              <div className="w-10 h-10 bg-primary rounded-xl group-hover:rotate-6 transition-all duration-500 shadow-xl shadow-primary/20 flex items-center justify-center text-white">
+                <span className="text-lg">AI</span>
+              </div>
+              <span className="text-slate-900">Toolkit</span>
             </Link>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              The world's fastest browser-based image toolkit. 100% private, secure and free to start.
+            <p className="mt-8 text-slate-500 leading-relaxed font-medium">
+              The world&apos;s fastest browser-based image toolkit. 100% private, secure and hardware-accelerated.
             </p>
-            <div className="flex gap-4 mt-8">
+            <div className="flex gap-4 mt-10">
               {[Twitter, Github, Linkedin].map((Icon, i) => (
-                <Link key={i} href="#" className="w-10 h-10 rounded-full border flex items-center justify-center text-muted-foreground hover:bg-secondary hover:text-primary transition-all">
+                <Link key={i} href="#" className="w-11 h-11 rounded-xl border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-primary transition-all">
                   <Icon size={18} />
                 </Link>
               ))}
@@ -45,15 +47,16 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold mb-6">Product</h4>
+            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 mb-8">Product</h4>
             <ul className="space-y-4">
-              {['Features', 'How it works', 'Pricing', 'API Console', 'Integrations'].map((item) => (
+              {['Features', 'How it works', 'Pricing', 'Batch Engine', 'Privacy'].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">{item}</Link>
+                  <Link href="#" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors">{item}</Link>
                 </li>
               ))}
             </ul>
           </div>
+
 
           <div>
             <h4 className="font-bold mb-6">Resources</h4>

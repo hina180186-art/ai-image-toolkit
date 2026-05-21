@@ -1,135 +1,134 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ShieldCheck, Lock, EyeOff, ServerOff, Cpu, ArrowRight, Check } from 'lucide-react';
-
-
-import { Button } from '@/components/ui/button';
+import { ShieldCheck, Lock, EyeOff, ServerOff, Cpu, ArrowRight, Check, Shield } from 'lucide-react';
 
 const trustFeatures = [
   {
+    icon: EyeOff,
+    title: "Zero Visibility",
+    desc: "Your images never leave your browser memory. We have zero servers that store or even see your data."
+  },
+  {
     icon: ServerOff,
-    title: "100% Serverless",
-    desc: "Your files never touch our clouds. We don't have a 'storage' folder because we don't want your data."
+    title: "No Server Uploads",
+    desc: "By moving the AI logic to the client-side (WASM), we eliminated the need for cloud uploads entirely."
   },
   {
     icon: Cpu,
-    title: "Local WASM Engine",
-    desc: "Powered by advanced WebAssembly algorithms that run directly in your browser's dedicated memory."
-  },
-  {
-    icon: EyeOff,
-    title: "Zero Tracking",
-    desc: "No analytics on your images. No metadata collection. Your visual assets remain strictly yours."
+    title: "Secure Processing",
+    desc: "Every pixel is processed using your device's local hardware, ensuring a 100% private environment."
   }
 ];
 
 export function TrustPrivacy() {
   return (
-    <section className="py-32 bg-secondary/30 relative overflow-hidden">
-      {/* Decorative Blur */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+    <section className="py-40 bg-[#F8F9FB] relative overflow-hidden">
+      {/* Decorative Gradient Overlay */}
+      <div className="absolute top-0 left-0 w-full h-[500px] bg-white [mask-image:linear-gradient(to_bottom,white,transparent)]" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-24 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-xl bg-primary/5 border border-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] mb-10"
             >
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-8">
-                Your Privacy Isn{"'"}t a <br />
-                <span className="text-primary italic">Feature. It{"'"}s the Foundation.</span>
-              </h2>
-              <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
-                Most toolkits upload your images to their servers to process them. 
-                We think that{"'"}s a security risk. AI Image Toolkit uses modern browser 
-                technology to optimize everything locally on your device.
-              </p>
+              <Shield size={14} />
+              Vault-Grade Privacy
+            </motion.div>
+            
+            <h2 className="text-5xl md:text-6xl font-black tracking-[-0.04em] text-slate-900 mb-8 leading-[1.1]">
+              Privacy isn&apos;t just a feature. <br />
+              <span className="text-slate-400">It&apos;s our entire architecture.</span>
+            </h2>
+            
+            <p className="text-xl text-slate-500 mb-12 leading-relaxed font-medium max-w-lg">
+              Most toolkits upload your images to their servers to process them. 
+              We think that&apos;s a security risk. AI Image Toolkit uses modern browser 
+              technology to optimize everything <span className="text-slate-900 font-bold">locally on your device.</span>
+            </p>
 
+            <div className="grid sm:grid-cols-1 gap-6">
+              {trustFeatures.map((f, i) => (
+                <div key={i} className="flex gap-6 p-1 bg-transparent group">
+                  <div className="w-14 h-14 shrink-0 rounded-2xl bg-white shadow-xl shadow-slate-200/50 border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors duration-500">
+                    <f.icon size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-black text-slate-900 mb-1 tracking-tight">{f.title}</h3>
+                    <p className="text-sm font-medium text-slate-400 leading-relaxed max-w-sm">{f.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
 
-              <div className="space-y-8">
-                {trustFeatures.map((f, i) => (
-                  <motion.div 
-                    key={f.title}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex gap-6 p-6 rounded-2xl bg-white/50 border border-white hover:bg-white hover:shadow-xl hover:shadow-primary/5 transition-all group"
-                  >
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <f.icon size={28} />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-lg mb-1">{f.title}</h4>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, x: 40 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="relative aspect-square rounded-[64px] bg-slate-900 shadow-[0_64px_128px_-20px_rgba(15,23,42,0.3)] overflow-hidden p-12 flex flex-col justify-between">
+              <div className="absolute inset-0 opacity-20" 
+                   style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #475569 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+              
+              <div className="relative z-10 flex justify-between items-start">
+                 <div className="w-16 h-16 rounded-[20px] bg-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center text-primary">
+                   <ShieldCheck size={32} />
+                 </div>
+                 <div className="text-right">
+                   <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Local Latency</div>
+                   <div className="text-2xl font-black text-white">0.02ms</div>
+                 </div>
+              </div>
+
+              <div className="relative z-10 space-y-8">
+                 <div className="flex flex-col gap-4">
+                   <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                     <motion.div 
+                        initial={{ width: 0 }}
+                        whileInView={{ width: '100%' }}
+                        transition={{ duration: 2, ease: "easeInOut" }}
+                        className="h-full bg-primary shadow-[0_0_20px_rgba(99,102,241,0.5)]" />
+                   </div>
+                   <div className="flex justify-between text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                     <span>Bypassing Server Network</span>
+                     <span className="text-emerald-400">100% Client-Side</span>
+                   </div>
+                 </div>
+
+                 <div className="p-8 rounded-[40px] bg-white/5 border border-white/10 backdrop-blur-xl">
+                   <div className="flex items-center gap-4 mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                        <Lock size={18} />
+                      </div>
+                      <div className="text-xs font-black text-white uppercase tracking-widest">End-to-End Local</div>
+                   </div>
+                   <p className="text-sm font-medium text-slate-400 leading-relaxed">
+                     Your files never hit the wire. No API calls, no storage buckets, no logs. Maximum security by design.
+                   </p>
+                 </div>
+              </div>
+            </div>
+
+            <motion.div 
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-12 -right-8 p-6 bg-white rounded-3xl shadow-2xl border border-slate-100 flex flex-col gap-2 z-20"
+            >
+              <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Compliance</div>
+              <div className="flex items-center gap-2 text-sm font-black text-slate-900">
+                <Check size={16} className="text-emerald-500" /> SOC2 Ready Flow
               </div>
             </motion.div>
-          </div>
-
-          <div className="relative">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative aspect-square rounded-[40px] bg-primary flex items-center justify-center p-12 overflow-hidden shadow-2xl shadow-primary/20"
-            >
-              {/* Pulsing Shield UI */}
-              <motion.div 
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="relative z-10 w-full h-full bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 flex flex-col items-center justify-center text-white"
-              >
-                <div className="relative mb-8">
-                  <motion.div 
-                    animate={{ opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="absolute inset-0 bg-white blur-2xl rounded-full"
-                  />
-                  <ShieldCheck size={120} className="relative z-10" />
-                </div>
-                <div className="text-3xl font-black tracking-tighter mb-2">LOCAL ONLY</div>
-                <div className="text-white/60 font-medium tracking-widest uppercase text-xs">Security Layer Active</div>
-              </motion.div>
-
-              {/* Decorative Particles */}
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  animate={{ 
-                    y: [0, -100, 0],
-                    opacity: [0, 1, 0]
-                  }}
-                  transition={{ 
-                    duration: 3 + i,
-                    repeat: Infinity,
-                    delay: i * 0.5
-                  }}
-                  className="absolute w-2 h-2 bg-white/20 rounded-full"
-                  style={{ 
-                    left: `${15 + (i * 15)}%`,
-                    bottom: '10%'
-                  }}
-                />
-              ))}
-            </motion.div>
-
-            {/* Trust Badges */}
-            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-4 bg-white rounded-2xl shadow-xl border whitespace-nowrap">
-              <span className="flex items-center gap-2 text-xs font-black text-primary">
-                <Check size={14} strokeWidth={4} /> GDPR COMPLIANT
-              </span>
-              <div className="w-px h-4 bg-border" />
-              <span className="flex items-center gap-2 text-xs font-black text-primary">
-                <Check size={14} strokeWidth={4} /> SOC2 ARCHITECTURE
-              </span>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
