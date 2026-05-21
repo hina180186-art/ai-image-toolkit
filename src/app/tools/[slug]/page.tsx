@@ -1,12 +1,14 @@
+'use client';
+
 import { useParams } from 'next/navigation';
 import { ToolLayout } from '@/components/layout/ToolLayout';
 import { Button } from '@/components/ui/button';
-import { Upload, Camera, FileCheck, Shield } from 'lucide-react';
+import { Upload, Camera, FileCheck, Shield, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ToolPage() {
   const params = useParams();
-  const slug = params.slug as string;
+  const slug = params?.slug as string;
 
   // Mock content generation based on slug for SEO
   const toolInfo = {
