@@ -1,108 +1,147 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Check, Zap, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Check, X, Zap } from 'lucide-react';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { Badge } from '@/components/ui/Badge';
+import { cn } from '@/lib/utils';
 
 const plans = [
   {
-    name: 'Standard',
-    price: '$0',
-    desc: 'Professional individual image optimizations.',
-    features: ['Standard AI Compression', 'WASM Local Engine', 'Bulk ZIP Export', '100% Private Session'],
-    cta: 'Start Free',
+    name: "Free",
+    price: 0,
+    desc: "For quick solo optimizations.",
+    features: [
+      { name: "Browser Compression", included: true },
+      { name: "Zero Server Uploads", included: true },
+      { name: "10 Images / Day", included: true },
+      { name: "Batch ZIP Export", included: false },
+      { name: "Advanced AVIF Support", included: false },
+      { name: "Priority Support", included: false },
+    ],
+    cta: "Start Compressing",
     popular: false
   },
   {
-    name: 'Pro',
-    price: '$19',
-    period: '/month',
-    desc: 'For creative teams and power users.',
-    features: ['Pro AI Pipeline', 'Unlimited Pipeline Speed', 'Priority Local Memory', 'Advanced Batch Tools', 'Premium Support'],
-    cta: 'Upgrade to Pro',
+    name: "Basic",
+    price: 5,
+    desc: "For the daily professional.",
+    features: [
+      { name: "Unlimited Compression", included: true },
+      { name: "Zero Server Uploads", included: true },
+      { name: "Bulk Batch Processing", included: true },
+      { name: "Batch ZIP Export", included: true },
+      { name: "High-Res Processing", included: true },
+      { name: "Email Support", included: false },
+    ],
+    cta: "Get Started",
+    popular: false
+  },
+  {
+    name: "Pro",
+    price: 12,
+    desc: "Power users and small teams.",
+    features: [
+      { name: "Everything in Basic", included: true },
+      { name: "Pro AI Engine (WASM-X)", included: true },
+      { name: "Full AVIF/WebP Studio", included: true },
+      { name: "Custom Presets", included: true },
+      { name: "Priority SLA Support", included: true },
+      { name: "Early Feature Access", included: true },
+    ],
+    cta: "Go Pro",
     popular: true
-  },
-  {
-    name: 'Enterprise',
-    price: 'Custom',
-    desc: 'Whitelabel capabilities for global teams.',
-    features: ['Custom AI Models', 'Team Workspaces', 'Bulk API Access', 'SLA Guarantee'],
-    cta: 'Contact Sales',
-    popular: false
   }
 ];
 
 export function Pricing() {
+  const [isAnnual, setIsAnnual] = useState(true);
+
   return (
-    <section id="pricing" className="py-40 bg-white relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-24">
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-slate-50 border border-slate-100 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-8"
+    <section className="py-24 px-6 bg-void text-center">
+      <div className="max-w-[1120px] mx-auto">
+        <h2 className="font-dm-sans font-bold text-[44px] leading-[1.1] text-text-primary tracking-tight mb-8">
+          Simple, scaling pricing
+        </h2>
+
+        {/* Toggle */}
+        <div className="flex items-center justify-center gap-4 mb-16">
+          <span className={cn("text-[14px] font-medium transition-colors", !isAnnual ? "text-text-primary" : "text-text-muted")}>Monthly</span>
+          <button 
+            onClick={() => setIsAnnual(!isAnnual)}
+            className="w-14 h-7 bg-lift rounded-full p-1 transition-all flex items-center"
           >
-            Transparent Pricing
-          </motion.div>
-          <h2 className="text-5xl md:text-6xl font-black text-slate-900 tracking-[-0.04em] mb-8 leading-[1.1]">
-            Honest plans for <br />
-            <span className="text-slate-400">serious workflows.</span>
-          </h2>
-          <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto">
-            Choose the scale you need. No hidden fees, no cloud storage costs. 
-            <span className="block mt-2 text-primary font-bold">Local processing is always free.</span>
-          </p>
+            <motion.div 
+              animate={{ x: isAnnual ? 28 : 0 }}
+              className="w-5 h-5 bg-aurora rounded-full shadow-lg" 
+            />
+          </button>
+          <span className={cn("text-[14px] font-medium transition-colors", isAnnual ? "text-text-primary" : "text-text-muted")}>Annual</span>
+          <Badge variant="aurora" className="ml-2 py-1 px-3">20% Discount</Badge>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 relative z-10">
+        <div className="grid md:grid-cols-3 gap-6">
           {plans.map((plan, i) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              viewport={{ once: true }}
-              className={`relative p-10 rounded-[48px] border flex flex-col transition-all duration-500 ${plan.popular ? 'border-primary/20 bg-white shadow-[0_48px_120px_-20px_rgba(99,102,241,0.15)] ring-1 ring-primary/10' : 'bg-slate-50/50 border-slate-100 hover:bg-white hover:border-slate-200 hover:shadow-2xl hover:shadow-slate-200/50'}`}
+            <GlassCard 
+              key={i} 
+              className={cn(
+                "p-8 flex flex-col text-left transition-all duration-500",
+                plan.popular ? "border-violet/40 shadow-[0_0_80px_rgba(124,58,237,0.2)] scale-[1.05] z-10" : "border-white/5"
+              )}
             >
               {plan.popular && (
-                <div className="absolute top-0 right-12 -translate-y-1/2 px-5 py-2 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-2xl flex items-center gap-2 shadow-2xl shadow-primary/40">
-                  <Sparkles size={14} className="fill-current" /> Recommended
+                <div className="flex justify-start mb-4">
+                  <Badge variant="aurora" className="flex items-center gap-1 py-1.5 px-4 rounded-lg">
+                    <Zap size={12} className="fill-white" /> MOST POPULAR
+                  </Badge>
                 </div>
               )}
-
-              <div className="mb-10">
-                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400 mb-4">{plan.name}</h3>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-[900] tracking-tighter text-slate-900">{plan.price}</span>
-                  {plan.period && <span className="text-lg font-bold text-slate-400">{plan.period}</span>}
-                </div>
-                <p className="mt-6 text-slate-500 font-medium leading-relaxed">
-                  {plan.desc}
-                </p>
+              
+              <h3 className="text-xl font-bold text-text-primary mb-2">{plan.name}</h3>
+              <p className="text-[14px] text-text-muted mb-6">{plan.desc}</p>
+              
+              <div className="flex items-baseline gap-1 mb-8">
+                <span className="text-4xl font-jetbrains font-bold text-text-primary">$</span>
+                <span className="text-6xl font-jetbrains font-bold text-text-primary">
+                  {isAnnual ? Math.floor(plan.price * 0.8) : plan.price}
+                </span>
+                <span className="text-lg font-medium text-text-muted">/mo</span>
               </div>
 
-              <div className="space-y-4 mb-12 flex-1">
-                {plan.features.map((f) => (
-                  <div key={f} className="flex items-center gap-4">
-                    <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600">
-                      <Check size={14} strokeWidth={3} />
-                    </div>
-                    <span className="text-sm font-bold text-slate-600">{f}</span>
+              <div className="flex flex-col gap-4 flex-1 mb-10">
+                {plan.features.map((feature, j) => (
+                  <div key={j} className="flex items-center gap-3">
+                    {feature.included ? (
+                      <div className="w-5 h-5 rounded-full bg-cyan/10 flex items-center justify-center">
+                        <Check size={12} className="text-cyan" />
+                      </div>
+                    ) : (
+                      <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center">
+                        <X size={12} className="text-text-muted" />
+                      </div>
+                    )}
+                    <span className={cn("text-[14px]", feature.included ? "text-text-secondary" : "text-text-muted line-through opacity-50")}>
+                      {feature.name}
+                    </span>
                   </div>
                 ))}
               </div>
 
-              <Button 
-                variant={plan.popular ? 'default' : 'outline'} 
-                className={`w-full h-16 rounded-[24px] text-[12px] font-black uppercase tracking-widest shadow-2xl transition-all hover:scale-[1.02] active:scale-[0.98] ${plan.popular ? 'bg-primary hover:bg-primary/90' : 'bg-white border-slate-200 text-slate-900 hover:bg-slate-50'}`}
-              >
+              <button className={cn(
+                "w-full py-4 rounded-xl font-bold transition-all",
+                plan.popular ? "btn-aurora" : "bg-lift hover:bg-elevated text-text-primary border border-white/10"
+              )}>
                 {plan.cta}
-              </Button>
-            </motion.div>
+              </button>
+            </GlassCard>
           ))}
         </div>
+
+        <p className="mt-12 text-[13px] text-text-muted">
+           14-day money-back guarantee · Cancel anytime · Tax included depending on location
+        </p>
       </div>
     </section>
   );
 }
-

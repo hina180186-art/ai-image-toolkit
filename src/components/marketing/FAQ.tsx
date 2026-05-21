@@ -2,25 +2,33 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from "@/components/ui/button";
-import { Mail, ChevronDown, Plus } from "lucide-react";
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const faqs = [
   {
-    question: "How is it possible to process images without a server?",
-    answer: "We use WebAssembly (WASM) and modern browser hardware acceleration. This allows us to run heavy AI models directly in your browser's dedicated memory, bypassing the need for cloud infrastructure entirely."
+    q: "Is it really 100% private?",
+    a: "Yes. Our compression engine is built using WebAssembly (WASM), which runs directly in your browser. We never transfer your image data to our servers. You can even check your Network tab in DevTools to verify."
   },
   {
-    question: "Do you store any copy of my images?",
-    answer: "Never. Your images are loaded into your computer's RAM, processed, and then can be downloaded. Once you close the tab, the memory is cleared. We literally have no storage buckets for user data."
+    q: "What file formats do you support?",
+    a: "We support all modern web formats including JPG, PNG, WEBP, and professional AVIF. Our system automatically detects the best optimization for each format."
   },
   {
-    question: "Is there a limit on file sizes or batch counts?",
-    answer: "Since processing happens on your device, the limit is only restricted by your computer's RAM. Most modern laptops can easily handle 50+ images at once."
+    q: "How many files can I compress at once?",
+    a: "On the Pro plan, there is no limit. Our parallel engine can handle hundreds of files simultaneously using your browser's multi-thread capabilities."
   },
   {
-    question: "Can I use AI Image Toolkit for commercial work?",
-    answer: "Absolutely. All outputs are yours to keep, and we do not claim any rights to the images you process through our local tools."
+    q: "Can I use this for high-res photography?",
+    a: "Absolutely. We support individual files up to 100MB each. Our engine is designed to handle high-fidelity images without visible quality loss."
+  },
+  {
+    q: "How does browser processing actually work?",
+    a: "Your browser uses native hardware acceleration. Instead of sending files to a slow server, your own CPU/GPU performs the math in real-time. This makes it faster than cloud solutions."
+  },
+  {
+    q: "Can I cancel my subscription anytime?",
+    a: "Yes. You can manage your subscription directly from your dashboard. We also offer a 14-day 'no questions asked' refund policy."
   }
 ];
 
@@ -28,58 +36,55 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-40 bg-white border-t border-slate-100">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
-          <h2 className="text-5xl font-black text-slate-900 tracking-[-0.04em] mb-6">Common Questions</h2>
-          <p className="text-xl text-slate-400 font-medium leading-relaxed">Everything you need to know about our local-first architecture.</p>
-        </div>
+    <section className="py-24 px-6 bg-void">
+      <div className="max-w-[800px] mx-auto">
+        <h2 className="font-dm-sans font-bold text-[44px] leading-[1.1] text-text-primary tracking-tight mb-16 text-center">
+          Frequently Asked Questions
+        </h2>
 
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           {faqs.map((faq, i) => (
             <div 
               key={i} 
-              className={`group border rounded-[32px] overflow-hidden transition-all duration-500 ${openIndex === i ? 'border-primary/20 bg-slate-50/50 shadow-2xl shadow-slate-200/50' : 'border-slate-100 bg-white hover:border-slate-200'}`}
+              className={cn(
+                "group border-b border-white/5 transition-all duration-300",
+                openIndex === i ? "pb-6" : "pb-0"
+              )}
             >
               <button 
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between p-8 text-left"
+                className="w-full py-6 flex items-center justify-between text-left group"
               >
-                <span className={`text-lg font-black tracking-tight transition-colors ${openIndex === i ? 'text-primary' : 'text-slate-900'}`}>
-                  {faq.question}
+                <span className={cn(
+                  "text-lg font-bold transition-colors",
+                  openIndex === i ? "text-cyan-bright" : "text-text-primary group-hover:text-violet"
+                )}>
+                  {faq.q}
                 </span>
-                <div className={`w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center transition-transform duration-500 ${openIndex === i ? 'rotate-180 bg-primary border-primary text-white' : 'text-slate-400'}`}>
-                  <ChevronDown size={14} />
-                </div>
+                <ChevronDown 
+                  size={20} 
+                  className={cn("text-text-muted transition-transform duration-300", 
+                  openIndex === i ? "rotate-180 text-cyan-bright" : "")} 
+                />
               </button>
-              
+
               <AnimatePresence>
                 {openIndex === i && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
+                    animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
                   >
-                    <div className="px-8 pb-8 text-slate-500 font-medium leading-relaxed">
-                      {faq.answer}
-                    </div>
+                    <p className="text-text-secondary leading-relaxed border-l-2 border-aurora pl-6 py-2">
+                      {faq.a}
+                    </p>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
           ))}
-        </div>
-
-        <div className="mt-24 p-12 bg-slate-900 rounded-[56px] text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none"
-               style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
-          
-          <h3 className="text-3xl font-black text-white mb-3 tracking-tight relative z-10">Still have questions?</h3>
-          <p className="text-lg text-slate-400 mb-10 font-medium relative z-10">Our team is here to help with technical questions.</p>
-          <Button className="h-16 px-10 rounded-2xl bg-white text-slate-900 hover:bg-slate-100 font-black tracking-tight relative z-10 shadow-2xl">
-            <Mail className="mr-3 w-5 h-5" /> Contact Support
-          </Button>
         </div>
       </div>
     </section>

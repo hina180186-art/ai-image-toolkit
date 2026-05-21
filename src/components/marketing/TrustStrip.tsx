@@ -1,38 +1,35 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { ShieldCheck, Zap, Lock, Package, CheckCircle2 } from 'lucide-react';
+import { Shield, CloudOff, Lock, Package, Zap } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const trustItems = [
-  { icon: ShieldCheck, text: "Browser Processing" },
-  { icon: Lock, text: "No Server Uploads" },
-  { icon: CheckCircle2, text: "100% Private" },
-  { icon: Zap, text: "Lightning Fast" },
-  { icon: Package, text: "Bulk ZIP Support" },
+  { icon: Shield, label: 'Browser Processing', sub: 'Native WASM', color: 'text-violet' },
+  { icon: CloudOff, label: 'No Server Uploads', sub: '100% Secure', color: 'text-cyan' },
+  { icon: Lock, label: '100% Private', sub: 'RAM Sandbox', color: 'text-emerald-400' },
+  { icon: Package, label: 'Bulk ZIP Ready', sub: 'Parallel Engine', color: 'text-amber-400' },
+  { icon: Zap, label: 'Free Plan', sub: 'Personal Use', color: 'text-pink-400' },
 ];
 
 export function TrustStrip() {
   return (
-    <div className="py-12 border-y bg-muted/30 relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-slate-200 [mask-image:linear-gradient(to_bottom,white,transparent)] opacity-20" />
-      
-      <div className="max-w-7xl mx-auto px-4 relative">
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
-          {trustItems.map((item, index) => (
-            <motion.div
-              key={item.text}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group cursor-default"
-            >
-              <item.icon className="w-5 h-5 opacity-70 group-hover:opacity-100 transition-opacity" />
-              <span className="font-medium text-sm md:text-base tracking-tight">{item.text}</span>
-            </motion.div>
+    <section className="bg-surface border-y border-white/5 py-10 px-6">
+      <div className="max-w-[1120px] mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+          {trustItems.map((item, i) => (
+            <div key={i} className="flex items-center gap-4 group">
+              <div className={cn(
+                "w-10 h-10 rounded-xl bg-void flex items-center justify-center border border-white/5 transition-all group-hover:scale-110",
+                item.color.replace('text-', 'bg-').replace('400', '400/10').replace('violet', 'violet/10').replace('cyan', 'cyan/10')
+              )}>
+                <item.icon size={18} className={item.color} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[14px] font-bold text-text-primary leading-tight">{item.label}</span>
+                <span className="text-[11px] font-medium text-text-muted uppercase tracking-wider">{item.sub}</span>
+              </div>
+            </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

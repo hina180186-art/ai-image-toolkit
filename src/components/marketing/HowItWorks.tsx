@@ -1,75 +1,68 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Upload, Zap, Download, ArrowRight } from 'lucide-react';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { LayoutGrid, Cpu, ArrowDownToLine } from 'lucide-react';
 
 const steps = [
   {
-    icon: Upload,
-    title: 'Upload images',
-    desc: 'Select JPG, PNG or WEBP files from your computer or drag and drop them here.',
-    color: 'bg-blue-500/10 text-blue-600'
+    icon: LayoutGrid,
+    title: "Select Images",
+    desc: "Drop or browse your files. We support JPG, PNG, WEBP and AVIF up to 100MB each.",
   },
   {
-    icon: Zap,
-    title: 'Compress instantly',
-    desc: 'Our engine optimizes your images in the background without losing visual quality.',
-    color: 'bg-amber-500/10 text-amber-600'
+    icon: Cpu,
+    title: "Local Compression",
+    desc: "Our WASM engine analyzes image data in browser RAM. zero data leaves your device.",
   },
   {
-    icon: Download,
-    title: 'Download optimized',
-    desc: 'Get your smaller, faster files individually or in a convenient ZIP package.',
-    color: 'bg-emerald-500/10 text-emerald-600'
-  }
+    icon: ArrowDownToLine,
+    title: "Instant Download",
+    desc: "Preview savings, adjust quality, and download individual files or a neat ZIP archive.",
+  },
 ];
 
 export function HowItWorks() {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 px-6 bg-void relative overflow-hidden">
+      <div className="max-w-[1120px] mx-auto relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">How it works</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Three simple steps to faster page loads and better SEO.
-          </p>
+          <span className="text-cyan text-[12px] font-bold tracking-[.15em] mb-4 block uppercase font-mono">
+            How It Works
+          </span>
+          <h2 className="font-dm-sans font-bold text-[44px] leading-[1.1] text-text-primary tracking-tight">
+            From upload to download in 3 steps
+          </h2>
         </div>
 
-        <div className="relative">
-          {/* Animated Connectors (Desktop) */}
-          <div className="hidden lg:block absolute top-[2.75rem] left-[20%] right-[20%] h-0.5 bg-muted-foreground/10">
-            <motion.div 
-              initial={{ width: 0 }}
-              whileInView={{ width: '100%' }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              viewport={{ once: true }}
-              className="h-full bg-primary"
-            />
-          </div>
+        <div className="grid md:grid-cols-3 gap-8 relative">
+          {/* Connecting Line (Desktop) */}
+          <div className="hidden md:block absolute top-[2.5rem] left-[15%] right-[15%] h-[1px] bg-gradient-to-r from-violet/20 via-cyan/20 to-violet/20 -z-0" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="relative flex flex-col items-center text-center group"
-              >
-                <div className={`w-20 h-20 rounded-full ${step.color} flex items-center justify-center mb-8 relative z-10 border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300`}>
-                  <step.icon size={32} />
+          {steps.map((step, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.2 }}
+            >
+              <GlassCard className="p-8 h-full flex flex-col items-center text-center group hover:scale-[1.03] hover:shadow-[0_0_80px_rgba(124,58,237,0.15)] transition-all">
+                <div className="w-12 h-12 rounded-full bg-aurora flex items-center justify-center text-white font-jetbrains text-lg font-bold mb-6 shadow-[0_0_20px_rgba(124,58,237,0.4)] z-10">
+                  0{i + 1}
                 </div>
-                <div className="absolute top-10 -right-[40%] hidden lg:flex items-center gap-1 text-primary/30 group-last:hidden">
-                  <ArrowRight size={20} />
+                <div className="w-16 h-16 rounded-2xl bg-lift flex items-center justify-center mb-6 group-hover:bg-elevated transition-colors">
+                  <step.icon size={32} className="text-violet" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
-                <p className="text-muted-foreground max-w-xs mx-auto leading-relaxed">
+                <h3 className="font-dm-sans font-bold text-[20px] text-text-primary mb-3">
+                  {step.title}
+                </h3>
+                <p className="text-[15px] text-text-secondary leading-relaxed font-dm-sans">
                   {step.desc}
                 </p>
-              </motion.div>
-            ))}
-          </div>
+              </GlassCard>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

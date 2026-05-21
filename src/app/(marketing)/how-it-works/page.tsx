@@ -1,109 +1,94 @@
 import type { Metadata } from 'next';
 import { Upload, Cpu, Download, Zap } from 'lucide-react';
 import Link from 'next/link';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { Badge } from '@/components/ui/Badge';
 
 export const metadata: Metadata = {
-  title: 'How It Works — ImageToolkit',
-  description: 'Learn how ImageToolkit compresses images in your browser using WebAssembly — fast, private, and free.',
+  title: 'How It Works — AI Image Toolkit',
+  description: 'Learn how our browser-native engine compresses images using WebAssembly.',
 };
 
 const steps = [
   {
     num: '01',
     icon: Upload,
-    title: 'Upload Your Image',
-    body: 'Drag and drop your file onto the upload zone, or click to browse. We support JPG, PNG, WEBP and AVIF up to 100MB.',
-    detail: 'The moment you drop your file, it is loaded into your browser\'s secure memory sandbox. No network request is made.',
+    title: 'Local Selection',
+    body: 'Select your files from your device. We generate a secure local reference — no data leaves your browser.',
   },
   {
     num: '02',
     icon: Cpu,
-    title: 'Browser Compresses Locally',
-    body: 'Our WASM engine analyses the image and applies adaptive quantization to reduce file size while preserving visible quality.',
-    detail: 'WebAssembly runs at near-native CPU speed inside a security-isolated environment. Your image data never leaves your machine.',
+    title: 'WASM Compression',
+    body: 'Our engine uses WebAssembly to execute near-native compression algorithms on your local CPU.',
   },
   {
     num: '03',
     icon: Download,
-    title: 'Download the Result',
-    body: 'Preview the Before / After comparison, check the file size savings, then click Download to save your compressed image.',
-    detail: 'The compressed file is generated entirely in-browser and offered for download directly. Nothing is stored on our servers.',
+    title: 'Instant Download',
+    body: 'Optimized files are ready in milliseconds. Download individually or as a parallel bundle.',
   },
-];
-
-const techPoints = [
-  { label: 'WebAssembly (WASM)', value: 'Runs compression algorithms at near-native speed without any browser plugin.' },
-  { label: 'Browser Memory Sandbox', value: 'Your image data is loaded into an isolated memory space that is cleared on tab close.' },
-  { label: 'Adaptive Quantization', value: 'Smart per-region quality adjustment preserves detail where it matters most.' },
-  { label: 'Zero Network Traffic', value: 'We disable all outbound image requests. DevTools will show zero image uploads.' },
 ];
 
 export default function HowItWorksPage() {
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="pt-28 pb-16 px-4 text-center bg-white border-b border-slate-100">
-        <p className="text-[12px] font-semibold text-primary uppercase tracking-wider mb-3">How It Works</p>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-5">
-          Compress in 3 steps.
-        </h1>
-        <p className="text-[16px] text-slate-500 max-w-md mx-auto">
-          No accounts. No uploads. No waiting. Just fast, private, browser-based compression.
-        </p>
+    <div className="min-h-screen bg-void pt-32">
+      <section className="pb-16 px-6 text-center">
+        <div className="max-w-[1120px] mx-auto">
+          <Badge variant="glass" className="mb-6 uppercase tracking-widest text-[11px] font-black border-violet/20">The Pipeline</Badge>
+          <h1 className="font-syne font-black text-[56px] leading-[1.1] text-text-primary tracking-tight mb-6">
+            Optimized in <span className="text-aurora">3 Steps</span>
+          </h1>
+          <p className="text-[18px] text-text-secondary leading-relaxed max-w-2xl mx-auto font-dm-sans">
+             Understand the architectural security and speed of Antigravity&apos;s browser-native processing.
+          </p>
+        </div>
       </section>
 
-      {/* Steps */}
-      <section className="py-20 px-4 max-w-4xl mx-auto">
-        <div className="flex flex-col gap-0">
+      <section className="py-20 px-6 max-w-[1120px] mx-auto">
+        <div className="grid md:grid-cols-3 gap-8">
           {steps.map((step, i) => (
-            <div key={step.num} className="relative flex gap-8 group">
-              {/* Timeline line */}
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 rounded-xl bg-white border-2 border-primary/25 flex items-center justify-center text-primary font-black text-[14px] shadow-sm group-hover:border-primary group-hover:bg-primary/5 transition-all z-10">
-                  {step.num}
-                </div>
-                {i < steps.length - 1 && (
-                  <div className="w-0.5 flex-1 bg-slate-200 my-2" />
-                )}
+            <GlassCard key={i} className="p-10 text-center flex flex-col items-center">
+              <div className="w-16 h-16 rounded-3xl bg-aurora flex items-center justify-center text-white font-jetbrains text-2xl font-bold mb-8 shadow-lg shadow-violet/30">
+                {step.num}
               </div>
-
-              {/* Content */}
-              <div className={`pb-${i < steps.length - 1 ? '12' : '0'} flex-1 pt-2`}>
-                <div className="flex items-center gap-2.5 mb-2">
-                  <step.icon size={17} className="text-primary" />
-                  <h2 className="text-[17px] font-bold text-slate-900">{step.title}</h2>
-                </div>
-                <p className="text-[14px] text-slate-700 leading-relaxed mb-2">{step.body}</p>
-                <p className="text-[13px] text-slate-400 leading-relaxed italic">{step.detail}</p>
-              </div>
-            </div>
+              <h3 className="font-dm-sans font-bold text-2xl text-text-primary mb-4">{step.title}</h3>
+              <p className="text-[15px] text-text-secondary leading-relaxed">{step.body}</p>
+            </GlassCard>
           ))}
         </div>
       </section>
 
-      {/* Tech Detail */}
-      <section className="py-16 px-4 bg-slate-900 mx-0">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-[13px] font-semibold text-slate-400 uppercase tracking-wider mb-8">Under the hood</h2>
-          <div className="grid sm:grid-cols-2 gap-5">
-            {techPoints.map((p) => (
-              <div key={p.label} className="p-5 rounded-xl bg-white/5 border border-white/8">
-                <p className="text-[13px] font-semibold text-white mb-1.5">{p.label}</p>
-                <p className="text-[12px] text-slate-400 leading-relaxed">{p.value}</p>
-              </div>
-            ))}
-          </div>
+      <section className="py-24 px-6 bg-abyss border-y border-white/5">
+        <div className="max-w-[1120px] mx-auto grid lg:grid-cols-2 gap-20 items-center">
+            <div className="flex flex-col items-start text-left">
+                <h2 className="font-dm-sans font-bold text-[32px] text-text-primary mb-6">Why browser-native?</h2>
+                <p className="text-[16px] text-text-secondary leading-relaxed mb-6">
+                    Cloud compression is a bottleneck. Sending high-res images to a server adds network latency and security risk. Antigravity removes the middleman.
+                </p>
+                <ul className="space-y-4">
+                    <li className="flex items-center gap-3 text-emerald-400 font-bold">
+                        <Zap size={18} /> Zero Network Latency
+                    </li>
+                    <li className="flex items-center gap-3 text-cyan font-bold">
+                        <Cpu size={18} /> Hardware Accelerated
+                    </li>
+                    <li className="flex items-center gap-3 text-violet font-bold">
+                        <Lock size={18} /> 100% Privacy Sandbox
+                    </li>
+                </ul>
+            </div>
+            <GlassCard className="p-8 aspect-video bg-void/50 border-white/5 overflow-hidden flex items-center justify-center">
+                 <div className="flex flex-col items-center gap-4 opacity-40">
+                    <div className="w-16 h-1 bg-aurora rounded-full animate-pulse" />
+                    <div className="w-12 h-1 bg-aurora/50 rounded-full animate-pulse delay-75" />
+                    <div className="w-20 h-1 bg-cyan/30 rounded-full animate-pulse delay-150" />
+                 </div>
+            </GlassCard>
         </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-16 px-4 bg-white text-center border-t border-slate-100">
-        <h2 className="text-2xl font-bold text-slate-900 mb-3">See it in action</h2>
-        <p className="text-[15px] text-slate-500 mb-6">Try it yourself — no account required.</p>
-        <Link href="/tools" className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
-          <Zap size={16} className="fill-white" /> Open Workspace
-        </Link>
       </section>
     </div>
   );
 }
+
+import { Lock } from 'lucide-react';
